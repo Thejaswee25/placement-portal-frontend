@@ -2,7 +2,7 @@ import axios from 'axios'
 import { getToken, clearAuth } from '../utils/tokenUtils'
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: 'ttps://placement-portal-backend-cjgw.onrender.com',
   headers: { 'Content-Type': 'application/json' },
   timeout: 15000,
 })
