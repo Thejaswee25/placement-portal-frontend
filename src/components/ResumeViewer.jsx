@@ -9,6 +9,8 @@ export default function ResumeViewer({ studentId, studentName, onClose }) {
 
   const BASE = "https://placement-portal-backend-cjgw.onrender.com"
 
+const src = `${BASE}/api/admin/student/${studentId}/resume`
+
   useEffect(() => {
     const fetchPdf = async () => {
       try {
