@@ -16,8 +16,10 @@ function StudentModal({ student, onClose }) {
     setDl(true)
     try {
       const token = getToken()
-      const url   = `http://localhost:8080/api/admin/student/${student.id}/resume`
-      const res   = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
+const BASE = "https://placement-portal-backend-cjgw.onrender.com"
+
+const url = `${BASE}/api/admin/student/${student.id}/resume`
+  const res   = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
       if (!res.ok) throw new Error()
       const blob = await res.blob()
       const a = Object.assign(document.createElement('a'), {
