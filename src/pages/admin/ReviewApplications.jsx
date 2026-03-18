@@ -5,7 +5,6 @@ import {
   rejectApplicationApi, selectApplicationApi, getStudentByIdApi,
 } from '../../api/adminApi'
 import { getStatusBadgeClass } from '../../utils/roleUtils'
-import { getToken } from '../../utils/tokenUtils'
 import {
   FileText, Check, X, Star, Search, GraduationCap,
   Phone, Linkedin, Github, Download, ChevronRight, ExternalLink, Award, BookOpen,
@@ -15,7 +14,6 @@ import {
 function StudentPanel({ app, onClose, onAction, acting }) {
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [dl,      setDl]      = useState(false)
 
   useEffect(() => {
     if (!app) return
@@ -29,25 +27,14 @@ function StudentPanel({ app, onClose, onAction, acting }) {
   }, [app?.studentId])
 
   // ✅ FIXED HERE — original file 1 logic preserved
-  const handleDownload = async () => {
+  // ✅ FIXED — opens resume in new tab (no download)
+  const handleDownload = () => {
     if (!profile?.resumeUrl) {
       alert('Resume not available.')
       return
     }
-
-    setDl(true)
-    try {
-      const token = getToken()
-      const url   = `http://localhost:8080/api/admin/student/${profile.id}/resume`
-      const res   = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
-      if (!res.ok) throw new Error()
-      const blob = await res.blob()
-      const a = Object.assign(document.createElement('a'), {
-        href: URL.createObjectURL(blob), download: `${profile.name}_resume.pdf`,
-      })
-      a.click(); URL.revokeObjectURL(a.href)
-    } catch { alert('Resume not available.') }
-    finally { setDl(false) }
+    console.log("Opening:", profile.resumeUrl)
+    window.open(profile.resumeUrl, "_blank")
   }
 
   if (!app) return null
@@ -175,7 +162,6 @@ function StudentPanel({ app, onClose, onAction, acting }) {
                 {profile.resumeUrl ? (
                   <button
                     onClick={handleDownload}
-                    disabled={dl}
                     className="w-full flex items-center gap-3 p-3 rounded-lg border border-neutral-200
                                bg-neutral-50 hover:bg-neutral-100 transition-colors text-left"
                   >
@@ -188,14 +174,11 @@ function StudentPanel({ app, onClose, onAction, acting }) {
                         {profile.name}_resume.pdf
                       </p>
                       <p className="text-[11px] text-neutral-500">
-                        Download PDF
+                        Click to open
                       </p>
                     </div>
 
-                    {dl
-                      ? <div className="w-4 h-4 border-2 border-primary-500 border-t-transparent rounded-full animate-spin flex-shrink-0" />
-                      : <Download size={13} className="text-neutral-400 flex-shrink-0" />
-                    }
+                    <Download size={13} className="text-neutral-400 flex-shrink-0" />
                   </button>
                 ) : (
                   <p className="text-xs text-neutral-400 text-center py-3 border border-dashed rounded-lg border-neutral-200">
