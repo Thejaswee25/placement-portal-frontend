@@ -139,8 +139,14 @@ export default function ManageStudents() {
   const [selected, setSelected] = useState(null)
 
   useEffect(() => {
-    getAllStudentsApi().then(({ data }) => setStudents(data)).catch(console.error).finally(() => setLoading(false))
-  }, [])
+  getAllStudentsApi()
+    .then(({ data }) => {
+      console.log(data); // 👈 log the response
+      setStudents(data);
+    })
+    .catch(console.error)
+    .finally(() => setLoading(false));
+}, []);
 
   const filtered = students.filter(s =>
     s.name?.toLowerCase().includes(search.toLowerCase()) ||
