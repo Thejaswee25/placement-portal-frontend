@@ -12,23 +12,37 @@ function StudentModal({ student, onClose }) {
   const [dl, setDl] = useState(false)
 
   const handleDownload = async () => {
-    if (!student.resumeUrl) return
-    setDl(true)
-    try {
-      const token = getToken()
-      const BASE = "https://placement-portal-backend-cjgw.onrender.com"
-      const url = `${BASE}/api/admin/student/${student.id}/resume`
-      const res   = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
-      if (!res.ok) throw new Error()
-      const blob = await res.blob()
-      const a = Object.assign(document.createElement('a'), {
-        href: URL.createObjectURL(blob),
-        download: `${student.name}_resume.pdf`,
-      })
-      a.click(); URL.revokeObjectURL(a.href)
-    } catch { alert('Resume not available.') }
-    finally { setDl(false) }
+  const BASE = "https://placement-portal-backend-cjgw.onrender.com"
+  const url = `${BASE}/api/admin/student/${student.id}/resume`
+
+  console.log("URL BEING CALLED:", url)   // 👈 IMPORTANT
+
+  setDl(true)
+  try {
+    const token = getToken()
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+
+    console.log("STATUS:", res.status)   // 👈 IMPORTANT
+
+    if (!res.ok) throw new Error()
+
+    const blob = await res.blob()
+    const a = Object.assign(document.createElement('a'), {
+      href: URL.createObjectURL(blob),
+      download: `${student.name}_resume.pdf`,
+    })
+    a.click()
+    URL.revokeObjectURL(a.href)
+
+  } catch (err) {
+    console.error("DOWNLOAD ERROR:", err)   // 👈 IMPORTANT
+    alert('Resume not available.')
+  } finally {
+    setDl(false)
   }
+}
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
