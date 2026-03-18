@@ -1,0 +1,230 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ───────── Base styles ───────── */
+
+@layer base {
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    @apply bg-neutral-50 text-neutral-800 font-sans;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-neutral-200 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-neutral-300;
+  }
+}
+
+
+/* ───────── Components ───────── */
+
+@layer components {
+
+  /* Buttons */
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2
+           font-medium text-sm rounded-lg
+           transition-all duration-150 select-none
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1
+           disabled:opacity-40 disabled:pointer-events-none;
+  }
+
+  .btn-primary {
+    @apply btn px-4 py-2 bg-blue-600 text-white
+           hover:bg-blue-700 active:bg-blue-800
+           focus-visible:ring-blue-500;
+  }
+
+  .btn-secondary {
+    @apply btn px-4 py-2 bg-white text-neutral-700
+           border border-neutral-200
+           hover:bg-neutral-50 hover:border-neutral-300 active:bg-neutral-100
+           focus-visible:ring-blue-400;
+  }
+
+  .btn-ghost {
+    @apply btn px-3 py-2 text-neutral-500
+           hover:bg-neutral-100 hover:text-neutral-700
+           focus-visible:ring-blue-400;
+  }
+
+  .btn-danger {
+    @apply btn px-4 py-2 bg-red-600 text-white
+           hover:bg-red-700 active:bg-red-800
+           focus-visible:ring-red-500;
+  }
+
+  .btn-success {
+    @apply btn px-4 py-2 bg-green-600 text-white
+           hover:bg-green-700 active:bg-green-700
+           focus-visible:ring-green-500;
+  }
+
+
+  /* Cards */
+
+  .card {
+    @apply bg-white rounded-xl border border-neutral-200 p-5;
+  }
+
+  .card-hover {
+    @apply card transition-shadow duration-150 hover:shadow-md;
+  }
+
+
+  /* Inputs */
+
+  .input {
+    @apply w-full px-3 py-2 text-sm bg-white
+           border border-neutral-200 rounded-lg
+           text-neutral-900 placeholder:text-neutral-400
+           hover:border-neutral-300
+           focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10
+           transition-all duration-150;
+  }
+
+  .label {
+    @apply block text-xs font-semibold text-neutral-500 mb-1;
+  }
+
+
+  /* Badges */
+
+  .badge {
+    @apply inline-flex items-center gap-1 px-2 py-0.5
+           rounded-md text-xs font-semibold;
+  }
+
+  .badge-applied {
+    @apply badge bg-blue-50 text-blue-700 ring-1 ring-blue-200/60;
+  }
+
+  .badge-shortlisted {
+    @apply badge bg-yellow-50 text-yellow-700 ring-1 ring-yellow-200/60;
+  }
+
+  .badge-selected {
+    @apply badge bg-green-50 text-green-700 ring-1 ring-green-200/60;
+  }
+
+  .badge-rejected {
+    @apply badge bg-red-50 text-red-700 ring-1 ring-red-200/60;
+  }
+
+  .badge-admin {
+    @apply badge bg-violet-50 text-violet-700 ring-1 ring-violet-200/60;
+  }
+
+  .badge-student {
+    @apply badge bg-blue-50 text-blue-700 ring-1 ring-blue-200/60;
+  }
+
+
+  /* Table */
+
+  .table-wrapper {
+    @apply overflow-x-auto rounded-xl border border-neutral-200;
+  }
+
+  .table-base {
+    @apply w-full text-sm;
+  }
+
+  .table-base thead tr {
+    @apply bg-neutral-50 border-b border-neutral-200;
+  }
+
+  .table-base thead th {
+    @apply px-4 py-3 text-left text-xs font-semibold text-neutral-500 uppercase tracking-wide;
+  }
+
+  .table-base tbody tr {
+    @apply bg-white border-b border-neutral-100 hover:bg-neutral-50/70 transition-colors duration-75;
+  }
+
+  .table-base tbody td {
+    @apply px-4 py-3 text-neutral-700;
+  }
+
+  .table-base tbody tr:last-child {
+    @apply border-b-0;
+  }
+
+
+  /* Sidebar */
+
+  .nav-link {
+    @apply flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium
+           text-neutral-500 hover:text-neutral-800 hover:bg-neutral-100
+           transition-colors duration-100 cursor-pointer;
+  }
+
+  .nav-link.active {
+    @apply bg-blue-50 text-blue-700 font-semibold;
+  }
+
+
+  /* Stat card */
+
+  .stat-card {
+    @apply card flex items-start gap-4;
+  }
+
+  .stat-icon {
+    @apply w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0;
+  }
+
+
+  /* Headings */
+
+  .page-heading {
+    @apply font-bold text-xl text-neutral-900;
+  }
+
+  .section-heading {
+    @apply font-semibold text-base text-neutral-800;
+  }
+
+
+  /* Divider */
+
+  .divider {
+    @apply border-t border-neutral-100 my-4;
+  }
+
+
+  /* Toast */
+
+  .toast {
+    @apply flex items-start gap-3 p-3.5 rounded-xl text-sm font-medium
+           bg-neutral-900 text-white;
+    min-width: 280px;
+    max-width: 360px;
+  }
+
+}
