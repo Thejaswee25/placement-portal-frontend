@@ -9,7 +9,9 @@ export default function ResumeViewer({ studentId, studentName, onClose }) {
   const token   = getToken()
   // We use an object tag to embed the PDF in-browser;
   // the browser fetches it with an Authorization header via a blob URL trick.
-  const src = `http://localhost:8080/api/admin/student/${studentId}/resume`
+const BASE = "https://placement-portal-backend-cjgw.onrender.com"
+
+const src = `${BASE}/api/admin/student/${studentId}/resume`
 
   const handleDownload = async () => {
     try {
